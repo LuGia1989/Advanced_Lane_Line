@@ -28353,7 +28353,7 @@ For transforming in the x direction, I start with the assumption that the lane i
     <span class="n">vehicle_position</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">bottom_x_left</span> <span class="o">+</span> <span class="n">bottom_x_right</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
 
     <span class="c1"># Convert pixel offset to meters</span>
-    <span class="n">xm_per_pix</span> <span class="o">=</span> <span class="mf">3.7</span> <span class="o">/</span> <span class="mi">700</span>  <span class="c1"># meters per pixel in x dimension</span>
+    <span class="n">xm_per_pix</span> <span class="o">=</span> <span class="mf">3.7</span> <span class="o">/</span> <span class="mi">900</span>  <span class="c1"># meters per pixel in x dimension</span>
     <span class="n">vehicle_position</span> <span class="o">*=</span> <span class="n">xm_per_pix</span>
     <span class="c1"># print(&#39;vehicle position: &#39;, vehicle_position)</span>
     <span class="k">return</span> <span class="n">vehicle_position</span>
