@@ -28184,7 +28184,9 @@ cRwnJ/8P2yBwJ2myL+cAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Calculate-Lane-Curve:">Calculate Lane Curve:<a class="anchor-link" href="#Calculate-Lane-Curve:">&#182;</a></h4><p>Given the lane_map dictionary which stored the best fit parameters for the left and right lane lines, I can compute the lane curvature using the tutorial <strong><a href="http://www.intmath.com/applications-differentiation/8-radius-curvature.php">http://www.intmath.com/applications-differentiation/8-radius-curvature.php</a></strong>.  The steps to compute the lane curvature is in the function <strong>calculate_lane_curve()</strong> below.</p>
+<h4 id="Calculate-Lane-Curve:">Calculate Lane Curve:<a class="anchor-link" href="#Calculate-Lane-Curve:">&#182;</a></h4><p>Given the lane_map dictionary which stored the best fit parameters for the left and right lane lines, I can compute the lane curvature using the tutorial <strong><a href="http://www.intmath.com/applications-differentiation/8-radius-curvature.php">http://www.intmath.com/applications-differentiation/8-radius-curvature.php</a></strong>.  The steps to compute the lane curvature is in the function <strong>calculate_lane_curve()</strong> below.
+For transforming in the x direction, I start with the assumption that the lane is 3.7 meters wide, and divide by the width of the lane in my warped image. From looking at the image in the previous rubric section, it looks like the lines are about 900 pixels apart, so a more appropriate conversion would be to use xm_per_pix = 3.7/900.</p>
+<p>Additionally, in the y direction, I can estimate this by assuming that each white dash is 3 meters long, and counting how many white dashes would fit in the warped image from bottom to top. If I decide that it is only 15 meters (just a random example) then ym_per_pix = 15 / 720.</p>
 
 </div>
 </div>
@@ -28317,8 +28319,8 @@ cRwnJ/8P2yBwJ2myL+cAAAAASUVORK5CYII=
 
     <span class="n">y_eval</span> <span class="o">=</span> <span class="mi">719</span>
     <span class="c1"># Define conversions in x and y from pixels space to meters</span>
-    <span class="n">ym_per_pix</span> <span class="o">=</span> <span class="mi">30</span> <span class="o">/</span> <span class="mi">720</span>  <span class="c1"># meters per pixel in y dimension</span>
-    <span class="n">xm_per_pix</span> <span class="o">=</span> <span class="mf">3.7</span> <span class="o">/</span> <span class="mi">700</span>  <span class="c1"># meters per pixel in x dimension</span>
+    <span class="n">ym_per_pix</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">/</span> <span class="mi">720</span>  <span class="c1"># meters per pixel in y dimension</span>
+    <span class="n">xm_per_pix</span> <span class="o">=</span> <span class="mf">3.7</span> <span class="o">/</span> <span class="mi">900</span>  <span class="c1"># meters per pixel in x dimension</span>
 
     <span class="c1"># Extract left and right pixel  positions</span>
     <span class="n">leftx</span> <span class="o">=</span> <span class="n">nonzerox</span><span class="p">[</span><span class="n">left_lane_inds</span><span class="p">]</span>
@@ -31396,6 +31398,18 @@ s3W2ztbZepHXmaE/W2frbJ2tl/g6M/Rn62ydrbP1El9nhv5sna2zdbZe4uvM0J+ts3W2ztZLfJ0Z
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.-Discussion">5. Discussion<a class="anchor-link" href="#5.-Discussion">&#182;</a></h2><p>While implementing this Advanced Lane Line project, I've faced the issues that the algorithm tried to pick up the unwanted pixels in the middle of the lanes due to the texture of road noises inside  the lanes.  This caused the lane markings bended and curved unexpectively.  To solve this issue, I had to define the ROI region to mask out the road noises inside the lanes as you can see in the <strong>cv2.fillPoly(combined_sobelx_hls_binary, np.array([src], np.int32), 0)</strong> in code block: In[5]</p>
+<p>As suggested by the previous mentor, one of the way which I can improve my algorithm is to also try applying thresholds based on the V channel of HSV (for yellow lines) and the L channel of HLS (for white lies). These two color channels can do a nice job of identifying lane lines without getting distracted by shadows and color changes.</p>
+<p>Lastly, this algorithm has been calculated based on a lengthy and almost straight road.  If this algorithm applies to a narrow twisted and curly road, this algorithm could fail.  For such narrow and curly road, I need to apply this algorithm to calculate on near/shorter road view in order to make the algorithm to work again.</p>
+
+</div>
+</div>
 </div>
     </div>
   </div>
